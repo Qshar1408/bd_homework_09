@@ -16,6 +16,8 @@
 
 * Нажмите кнопку «Создать кластер» и дождитесь окончания процесса создания, статус кластера = RUNNING. Кластер создаётся от 5 до 10 минут.
 
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_001.png)
+
 #### Подключение к мастеру и реплике 
 
 * Используйте инструкцию по подключению к кластеру, доступную на вкладке «Обзор»: cкачайте SSL-сертификат и подключитесь к кластеру с помощью утилиты psql, указав hostname всех узлов и атрибут ```target_session_attrs=read-write```.
@@ -24,10 +26,13 @@
 ```
 select case when pg_is_in_recovery() then 'REPLICA' else 'MASTER' end;
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_002.png)
+
 * Посмотрите количество подключенных реплик:
 ```
 select count(*) from pg_stat_replication;
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_003.png)
 
 ### Проверьте работоспособность репликации в кластере
 
@@ -35,9 +40,11 @@ select count(*) from pg_stat_replication;
 ```
 CREATE TABLE test_table(text varchar);
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_004.png)
 ```
 insert into test_table values('Строка 1');
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_005.png)
 
 * Выйдите из psql командой ```\q```.
 
@@ -47,15 +54,19 @@ insert into test_table values('Строка 1');
 ```
 select case when pg_is_in_recovery() then 'REPLICA' else 'MASTER' end;
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_006.png)
+
 * Проверьте состояние репликации
 ```
 select status from pg_stat_wal_receiver;
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_007.png)
 
 * Для проверки, что механизм репликации данных работает между зонами доступности облака, выполните запрос к таблице, созданной на предыдущем шаге:
 ```
 select * from test_table;
 ```
+![bd_009](https://github.com/Qshar1408/bd_homework_09/blob/main/img/bd_09_008.png)
 
 *В качестве результата вашей работы пришлите скриншоты:*
 
